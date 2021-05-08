@@ -8,7 +8,7 @@ namespace pandemic
     class Medic : public Player
     {
     public:
-        Medic(Board, City);
+        Medic(Board&, City);
         std::string role();
         Medic &drive(City);
         Medic &fly_direct(City);

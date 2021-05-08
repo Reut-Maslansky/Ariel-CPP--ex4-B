@@ -10,7 +10,7 @@ namespace pandemic
         int N;
 
     public:
-        Scientist(Board, City, int);
+        Scientist(Board&, City, int);
         std::string role();
         Scientist &discover_cure(Color);
     };

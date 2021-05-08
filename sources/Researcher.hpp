@@ -8,7 +8,7 @@ namespace pandemic
     class Researcher : public Player
     {
     public:
-        Researcher(Board, City);
+        Researcher(Board&, City);
         std::string role();
         Researcher &discover_cure(Color);
     };

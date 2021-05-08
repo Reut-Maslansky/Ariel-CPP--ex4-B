@@ -1,6 +1,8 @@
 #include "Player.hpp"
 using namespace std;
 
+const int numberOfCardsTreat=5;
+
 namespace pandemic
 {
 
@@ -11,6 +13,9 @@ namespace pandemic
 
     Player &Player::drive(City c)
     {
+        if(myLocation==c){
+            throw invalid_argument("Can't drive: This city is current location of the player");
+        }
         if (myBoard.neighbors.at(myLocation).count(c) == 0)
         {
             throw invalid_argument("Can't drive: This city is not a neighbor of the current city");
@@ -21,6 +26,9 @@ namespace pandemic
 
     Player &Player::fly_direct(City c)
     {
+        if(myLocation==c){
+            throw invalid_argument("Can't fly: This city is current location of the player");
+        }
         if (myCards.count(c) == 0)
         {
             throw invalid_argument("Can't fly: The player does not hold a matching card");
@@ -33,6 +41,9 @@ namespace pandemic
 
     Player &Player::fly_charter(City c)
     {
+        if(myLocation==c){
+            throw invalid_argument("Can't fly: This city is current location of the player");
+        }
         if (myCards.count(myLocation) == 0)
         {
             throw invalid_argument("Can't fly: The player does not hold a matching card");
@@ -45,11 +56,13 @@ namespace pandemic
 
     Player &Player::fly_shuttle(City c)
     {
-        if (myBoard.hasStation(myLocation) == false || myBoard.hasStation(c) == false)
+        if(myLocation==c){
+            throw invalid_argument("Can't fly: This city is current location of the player");
+        }
+        if (!myBoard.hasStation(myLocation) || !myBoard.hasStation(c))
         {
             throw invalid_argument("Can't fly: This city does not have a research station");
         }
-
         myLocation = c;
         return *this;
     }
@@ -60,7 +73,7 @@ namespace pandemic
         {
             throw invalid_argument("Can't build: The player does not hold a matching card");
         }
-        if (myBoard.hasStation(myLocation) == false)
+        if (!myBoard.hasStation(myLocation))
         {
             myCards.erase(myLocation);
             myColors.at(myBoard.colors.at(myLocation))--;
@@ -71,29 +84,31 @@ namespace pandemic
 
     Player &Player::discover_cure(Color c)
     {
-        if (myBoard.hasCure(c) == false)
+        if (!myBoard.hasCure(c))
         {
-            if (myBoard.hasStation(myLocation) == false)
+            if (!myBoard.hasStation(myLocation))
             {
                 throw invalid_argument("Can't discover: This city does not have a research station");
             }
-            if (myColors.at(c) < 5)
+            if (myColors.at(c) < numberOfCardsTreat)
             {
                 throw invalid_argument("Can't discover: There are not enough cards of this color");
             }
 
-            myColors.at(c) -= 5;
+            myColors.at(c) -= numberOfCardsTreat;
             myBoard.disCure(c);
-            int count = 5;
+            int count = numberOfCardsTreat;
 
-            for (auto it = myCards.begin(); it != myCards.end() && count > 0; ++it)
+           auto it = myCards.begin();
+            while( it != myCards.end() && count > 0)
             {
                 if (myBoard.colors.at(*it) == c)
                 {
                     myCards.erase(it++);
                     count--;
                 }
-                else{
+                else
+                {
                     ++it;
                 }
             }
@@ -111,7 +126,7 @@ namespace pandemic
         {
             throw invalid_argument("Can't treat: There is no pollution in this city");
         }
-        if (myBoard.hasCure(myBoard.colors.at(c)) == true)
+        if (myBoard.hasCure(myBoard.colors.at(c)))
         {
             myBoard[c] = 0;
         }
@@ -129,4 +144,10 @@ namespace pandemic
         myCards.insert(c);
         return *this;
     }
+
+    void Player::remove_cards()
+    {
+        myCards.clear();
+    }
+
 };

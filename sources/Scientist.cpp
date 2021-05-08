@@ -4,7 +4,7 @@ using namespace std;
 
 namespace pandemic
 {
-    Scientist::Scientist(Board b, City c, int n) : Player(b, c), N(n) {}
+    Scientist::Scientist(Board& b, City c, int n) : Player(b, c), N(n) {}
 
     string Scientist::role() { return "Scientist"; }
 
@@ -12,7 +12,7 @@ namespace pandemic
     {
         if (myBoard.hasCure(c) == false)
         {
-            if (myBoard.hasStation(myLocation) == false)
+            if (!myBoard.hasStation(myLocation))
             {
                 throw invalid_argument("Can't discover: This city does not have a research station");
             }
@@ -25,7 +25,8 @@ namespace pandemic
             myBoard.disCure(c);
             int count = N;
 
-            for (auto it = myCards.begin(); it != myCards.end() && count > 0; ++it)
+            auto it = myCards.begin();
+            while( it != myCards.end() && count > 0)
             {
                 if (myBoard.colors.at(*it) == c)
                 {

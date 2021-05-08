@@ -4,9 +4,9 @@ using namespace std;
 
 namespace pandemic
 {
-    Medic::Medic(Board b, City c) : Player(b, c)
+    Medic::Medic(Board& b, City c) : Player(b, c)
     {
-        if (myBoard.hasCure(myBoard.colors.at(c)) == true)
+        if (myBoard.hasCure(myBoard.colors.at(c)))
         {
             myBoard[c] = 0;
         }
@@ -15,12 +15,16 @@ namespace pandemic
 
     Medic &Medic::drive(City c)
     {
+         if(myLocation==c){
+            throw invalid_argument("Can't drive: This city is current location of the player");
+
+        }
         if (myBoard.neighbors.at(myLocation).count(c) == 0)
         {
             throw invalid_argument("Can't drive: This city is not a neighbor of the current city");
         }
         myLocation = c;
-        if (myBoard.hasCure(myBoard.colors.at(c)) == true)
+        if (myBoard.hasCure(myBoard.colors.at(c)))
         {
             myBoard[c] = 0;
         }
@@ -29,6 +33,10 @@ namespace pandemic
 
     Medic &Medic::fly_direct(City c)
     {
+         if(myLocation==c){
+            throw invalid_argument("Can't fly: This city is current location of the player");
+
+        }
         if (myCards.count(c) == 0)
         {
             throw invalid_argument("Can't fly: The player does not hold a matching card");
@@ -36,7 +44,7 @@ namespace pandemic
         myCards.erase(c);
         myColors.at(myBoard.colors.at(c))--;
         myLocation = c;
-        if (myBoard.hasCure(myBoard.colors.at(c)) == true)
+        if (myBoard.hasCure(myBoard.colors.at(c)))
         {
             myBoard[c] = 0;
         }
@@ -45,6 +53,10 @@ namespace pandemic
 
     Medic &Medic::fly_charter(City c)
     {
+         if(myLocation==c){
+            throw invalid_argument("Can't fly: This city is current location of the player");
+
+        }
         if (myCards.count(myLocation) == 0)
         {
             throw invalid_argument("Can't fly: The player does not hold a matching card");
@@ -53,7 +65,7 @@ namespace pandemic
         myColors.at(myBoard.colors.at(myLocation))--;
         myLocation = c;
 
-        if (myBoard.hasCure(myBoard.colors.at(c)) == true)
+        if (myBoard.hasCure(myBoard.colors.at(c)))
         {
             myBoard[c] = 0;
         }
@@ -62,14 +74,18 @@ namespace pandemic
 
     Medic &Medic::fly_shuttle(City c)
     {
-        if (myBoard.hasStation(myLocation) == false || myBoard.hasStation(c) == false)
+         if(myLocation==c){
+            throw invalid_argument("Can't fly: This city is current location of the player");
+
+        }
+        if (!myBoard.hasStation(myLocation) || !myBoard.hasStation(c))
         {
             throw invalid_argument("Can't fly: This city does not have a research station");
         }
 
         myLocation = c;
 
-        if (myBoard.hasCure(myBoard.colors.at(c)) == true)
+        if (myBoard.hasCure(myBoard.colors.at(c)))
         {
             myBoard[c] = 0;
         }

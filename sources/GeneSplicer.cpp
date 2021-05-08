@@ -4,15 +4,15 @@ using namespace std;
 
 namespace pandemic
 {
-    GeneSplicer::GeneSplicer(Board b, City c) : Player(b, c) {}
+    GeneSplicer::GeneSplicer(Board& b, City c) : Player(b, c) {}
     
     string GeneSplicer::role() { return "GeneSplicer"; }
     
     GeneSplicer &GeneSplicer::discover_cure(Color c)
     {
-        if (myBoard.hasCure(c) == false)
+        if (!myBoard.hasCure(c))
         {
-            if (myBoard.hasStation(myLocation) == false)
+            if (!myBoard.hasStation(myLocation))
             {
                 throw invalid_argument("Can't discover: This city does not have a research station");
             }

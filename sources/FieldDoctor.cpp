@@ -4,7 +4,7 @@ using namespace std;
 
 namespace pandemic
 {
-    FieldDoctor::FieldDoctor(Board b, City c) : Player(b, c) {}
+    FieldDoctor::FieldDoctor(Board& b, City c) : Player(b, c) {}
     
     string FieldDoctor::role() { return "FieldDoctor"; }
     
@@ -18,7 +18,7 @@ namespace pandemic
         {
             throw invalid_argument("Can't treat: There is no pollution in this city");
         }
-        if (myBoard.hasCure(myBoard.colors.at(c)) == true)
+        if (myBoard.hasCure(myBoard.colors.at(c)))
         {
             myBoard[c] = 0;
         }
