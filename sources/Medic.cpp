@@ -6,7 +6,7 @@ namespace pandemic
 {
     Medic::Medic(Board& b, City c) : Player(b, c)
     {
-        if (myBoard.hasCure(myBoard.colors.at(c)))
+        if (myBoard.hasCure(Board::colors.at(c)))
         {
             myBoard[c] = 0;
         }
@@ -19,12 +19,12 @@ namespace pandemic
             throw invalid_argument("Can't drive: This city is current location of the player");
 
         }
-        if (myBoard.neighbors.at(myLocation).count(c) == 0)
+        if (Board::neighbors.at(myLocation).count(c) == 0)
         {
             throw invalid_argument("Can't drive: This city is not a neighbor of the current city");
         }
         myLocation = c;
-        if (myBoard.hasCure(myBoard.colors.at(c)))
+        if (myBoard.hasCure(Board::colors.at(c)))
         {
             myBoard[c] = 0;
         }
@@ -42,9 +42,9 @@ namespace pandemic
             throw invalid_argument("Can't fly: The player does not hold a matching card");
         }
         myCards.erase(c);
-        myColors.at(myBoard.colors.at(c))--;
+        myColors.at(Board::colors.at(c))--;
         myLocation = c;
-        if (myBoard.hasCure(myBoard.colors.at(c)))
+        if (myBoard.hasCure(Board::colors.at(c)))
         {
             myBoard[c] = 0;
         }
@@ -62,10 +62,10 @@ namespace pandemic
             throw invalid_argument("Can't fly: The player does not hold a matching card");
         }
         myCards.erase(myLocation);
-        myColors.at(myBoard.colors.at(myLocation))--;
+        myColors.at(Board::colors.at(myLocation))--;
         myLocation = c;
 
-        if (myBoard.hasCure(myBoard.colors.at(c)))
+        if (myBoard.hasCure(Board::colors.at(c)))
         {
             myBoard[c] = 0;
         }
@@ -85,7 +85,7 @@ namespace pandemic
 
         myLocation = c;
 
-        if (myBoard.hasCure(myBoard.colors.at(c)))
+        if (myBoard.hasCure(Board::colors.at(c)))
         {
             myBoard[c] = 0;
         }

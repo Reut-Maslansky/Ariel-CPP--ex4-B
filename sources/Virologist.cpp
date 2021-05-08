@@ -20,7 +20,7 @@ namespace pandemic
             {
                 throw invalid_argument("Can't treat: The player does not hold a matching card");
             }
-            if (myBoard.hasCure(myBoard.colors.at(c)) == true)
+            if (myBoard.hasCure(Board::colors.at(c)))
             {
                 myBoard[c] = 0;
             }
@@ -29,7 +29,7 @@ namespace pandemic
                 myBoard[c]--;
             }
             myCards.erase(c);
-            myColors.at(myBoard.colors.at(c))--;
+            myColors.at(Board::colors.at(c))--;
         }
         return *this;
     }

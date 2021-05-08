@@ -10,7 +10,7 @@ namespace pandemic
     
     FieldDoctor &FieldDoctor::treat(City c)
     {
-        if (myLocation != c && myBoard.neighbors.at(myLocation).count(c) == 0)
+        if (myLocation != c && Board::neighbors.at(myLocation).count(c) == 0)
         {
             throw invalid_argument("Can't treat: This city is not a neighbor of the current city");
         }
@@ -18,7 +18,7 @@ namespace pandemic
         {
             throw invalid_argument("Can't treat: There is no pollution in this city");
         }
-        if (myBoard.hasCure(myBoard.colors.at(c)))
+        if (myBoard.hasCure(Board::colors.at(c)))
         {
             myBoard[c] = 0;
         }

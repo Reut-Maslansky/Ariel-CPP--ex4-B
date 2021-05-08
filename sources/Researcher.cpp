@@ -2,7 +2,7 @@
 
 using namespace std;
 
-const int numberOfCardsTreat=5;
+const int numberOfCardsDis=5;
 
 namespace pandemic
 {
@@ -14,21 +14,19 @@ namespace pandemic
     {
         if (!myBoard.hasCure(c))
         {
-            if (myColors.at(c) < numberOfCardsTreat)
+            if (myColors.at(c) < numberOfCardsDis)
             {
                 throw invalid_argument("Can't discover: There are not enough cards of this color");
             }
 
-            myColors.at(c) -= numberOfCardsTreat;
+            myColors.at(c) -= numberOfCardsDis;
             myBoard.disCure(c);
-            int count = numberOfCardsTreat;
+            int count = numberOfCardsDis;
 
             auto it = myCards.begin();
             while( it != myCards.end() && count > 0)
             {
-                City ci=*it;
-                // if (myBoard.colors.at(ci) == c)
-                if (myBoard.colors.at(*it) == c)
+                if (Board::colors.at(*it) == c)
                 {
                     myCards.erase(it++);
                     count--;

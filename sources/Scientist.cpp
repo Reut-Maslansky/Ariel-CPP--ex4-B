@@ -10,7 +10,7 @@ namespace pandemic
 
     Scientist &Scientist::discover_cure(Color c)
     {
-        if (myBoard.hasCure(c) == false)
+        if (!myBoard.hasCure(c))
         {
             if (!myBoard.hasStation(myLocation))
             {
@@ -28,7 +28,7 @@ namespace pandemic
             auto it = myCards.begin();
             while( it != myCards.end() && count > 0)
             {
-                if (myBoard.colors.at(*it) == c)
+                if (Board::colors.at(*it) == c)
                 {
                     myCards.erase(it++);
                     count--;

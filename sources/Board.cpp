@@ -32,7 +32,7 @@ namespace pandemic
 
     int &Board::operator[](City c) { return diseaseLevel.at(c); }
 
-    const int Board::operator[](City c) const { return diseaseLevel.at(c); }
+    int Board::operator[](City c) const { return diseaseLevel.at(c); }
 
     ostream &operator<<(ostream &os, const Board &b)
     {
