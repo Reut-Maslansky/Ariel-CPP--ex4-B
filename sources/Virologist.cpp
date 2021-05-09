@@ -20,6 +20,10 @@ namespace pandemic
             {
                 throw invalid_argument("Can't treat: The player does not hold a matching card");
             }
+            if (myBoard[c] == 0)
+            {
+                throw invalid_argument("Can't treat: There is no pollution in this city");
+            }
             if (myBoard.hasCure(Board::colors.at(c)))
             {
                 myBoard[c] = 0;
