@@ -136,7 +136,6 @@ namespace pandemic
         }
         return *this;
     }
-    string Player::role() { return "Player"; }
 
     Player &Player::take_card(City c)
     {

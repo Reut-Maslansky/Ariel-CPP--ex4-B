@@ -22,8 +22,8 @@ namespace pandemic
         virtual Player &build();
         virtual Player &discover_cure(Color);
         virtual Player &treat(City);
-        virtual std::string role();
-        virtual Player &take_card(City);
+        virtual std::string role()=0;
+        Player &take_card(City);
         void remove_cards();
     };
 }
