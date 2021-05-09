@@ -4,7 +4,7 @@ using namespace std;
 
 namespace pandemic
 {
-    Medic::Medic(Board& b, City c) : Player(b, c)
+    Medic::Medic(Board &b, City c) : Player(b, c)
     {
         if (myBoard.hasCure(Board::colors.at(c)))
         {
@@ -15,9 +15,9 @@ namespace pandemic
 
     Medic &Medic::drive(City c)
     {
-         if(myLocation==c){
+        if (myLocation == c)
+        {
             throw invalid_argument("Can't drive: This city is current location of the player");
-
         }
         if (Board::neighbors.at(myLocation).count(c) == 0)
         {
@@ -33,9 +33,9 @@ namespace pandemic
 
     Medic &Medic::fly_direct(City c)
     {
-         if(myLocation==c){
+        if (myLocation == c)
+        {
             throw invalid_argument("Can't fly: This city is current location of the player");
-
         }
         if (myCards.count(c) == 0)
         {
@@ -53,9 +53,9 @@ namespace pandemic
 
     Medic &Medic::fly_charter(City c)
     {
-         if(myLocation==c){
+        if (myLocation == c)
+        {
             throw invalid_argument("Can't fly: This city is current location of the player");
-
         }
         if (myCards.count(myLocation) == 0)
         {
@@ -74,9 +74,9 @@ namespace pandemic
 
     Medic &Medic::fly_shuttle(City c)
     {
-         if(myLocation==c){
+        if (myLocation == c)
+        {
             throw invalid_argument("Can't fly: This city is current location of the player");
-
         }
         if (!myBoard.hasStation(myLocation) || !myBoard.hasStation(c))
         {
@@ -94,7 +94,11 @@ namespace pandemic
 
     Medic &Medic::treat(City c)
     {
-        myBoard[c] = 0;
+        if (myBoard[myLocation] == 0)
+        {
+            throw invalid_argument("Can't treat: There is no pollution in this city");
+        }
+        myBoard[myLocation] = 0;
         return *this;
     }
 };
